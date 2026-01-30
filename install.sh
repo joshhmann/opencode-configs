@@ -112,7 +112,7 @@ install_aliases() {
             print_warning "Please manually add aliases to your shell config"
             return
             ;;
-    esnac
+    esac
     
     if [ -f "$shell_rc" ]; then
         # Check if aliases already exist
