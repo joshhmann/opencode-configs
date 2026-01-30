@@ -1,0 +1,128 @@
+#!/bin/bash
+
+# Oh My OpenCode Mode Switcher
+# Usage: omo-mode [free|balanced|performance]
+
+CONFIG_DIR="$HOME/.config/opencode"
+CURRENT_CONFIG="$CONFIG_DIR/oh-my-opencode.json"
+
+show_help() {
+    echo "Oh My OpenCode Mode Switcher"
+    echo ""
+    echo "Usage: omo-mode [MODE]"
+    echo ""
+    echo "Modes:"
+    echo "  free        - Use free models primarily (opencode/kimi-k2.5-free, glm-4.7-free)"
+    echo "  balanced    - Uses kimi-for-coding k2p5 via subscription, falls back to antigravity"
+    echo "  performance - Maximum quality with kimi-for-coding k2p5 as primary"
+    echo "  list        - Show available modes and current status"
+    echo ""
+    echo "Examples:"
+    echo "  omo-mode free       # Switch to free/frugal mode"
+    echo "  omo-mode performance # Switch to performance mode"
+}
+
+show_status() {
+    echo "Current Oh My OpenCode Mode:"
+    echo ""
+    
+    if [ -L "$CURRENT_CONFIG" ]; then
+        target=$(readlink "$CURRENT_CONFIG")
+        mode=$(basename "$target" .json | sed 's/oh-my-opencode-//')
+        echo "  Active: $mode mode"
+        echo "  File:   $target"
+    else
+        echo "  Active: custom (not a symlink)"
+        echo "  File:   $CURRENT_CONFIG"
+    fi
+    echo ""
+    echo "Available modes:"
+    for config in "$CONFIG_DIR"/oh-my-opencode*.json; do
+        if [ -f "$config" ]; then
+            name=$(basename "$config" .json | sed 's/oh-my-opencode-//')
+            if [ "$name" = "oh-my-opencode" ]; then
+                name="balanced (default)"
+            fi
+            echo "  - $name"
+        fi
+    done
+}
+
+switch_mode() {
+    mode=$1
+    
+    case "$mode" in
+        free)
+            target="oh-my-opencode-free.json"
+            ;;
+        balanced)
+            target="oh-my-opencode-balanced.json"
+            # If balanced doesn't exist, we'll use the original
+            if [ ! -f "$CONFIG_DIR/$target" ]; then
+                echo "Creating balanced mode from current config..."
+                cp "$CURRENT_CONFIG" "$CONFIG_DIR/oh-my-opencode-balanced.json"
+                target="oh-my-opencode-balanced.json"
+            fi
+            ;;
+        performance)
+            target="oh-my-opencode-performance.json"
+            ;;
+        *)
+            echo "Error: Unknown mode '$mode'"
+            echo ""
+            show_help
+            exit 1
+            ;;
+    esac
+    
+    if [ ! -f "$CONFIG_DIR/$target" ]; then
+        echo "Error: Configuration file not found: $CONFIG_DIR/$target"
+        exit 1
+    fi
+    
+    # Backup current config if it's not a symlink
+    if [ -f "$CURRENT_CONFIG" ] && [ ! -L "$CURRENT_CONFIG" ]; then
+        backup="$CONFIG_DIR/oh-my-opencode-backup-$(date +%Y%m%d-%H%M%S).json"
+        cp "$CURRENT_CONFIG" "$backup"
+        echo "Backed up current config to: $backup"
+    fi
+    
+    # Remove existing symlink or file
+    rm -f "$CURRENT_CONFIG"
+    
+    # Create new symlink
+    ln -s "$CONFIG_DIR/$target" "$CURRENT_CONFIG"
+    
+    echo ""
+    echo "✓ Switched to $mode mode"
+    echo "  Config: $CONFIG_DIR/$target"
+    echo ""
+    echo "Next time you start opencode, it will use the $mode configuration."
+    echo "Restart any running opencode sessions to apply the changes."
+}
+
+# Main
+case "${1:-}" in
+    -h|--help|help)
+        show_help
+        exit 0
+        ;;
+    list|status)
+        show_status
+        exit 0
+        ;;
+    free|balanced|performance)
+        switch_mode "$1"
+        exit 0
+        ;;
+    "")
+        show_status
+        exit 0
+        ;;
+    *)
+        echo "Error: Unknown command '$1'"
+        echo ""
+        show_help
+        exit 1
+        ;;
+esac

@@ -1,0 +1,133 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/master/assets/oh-my-opencode.schema.json",
+  "google_auth": false,
+  "_description": "BALANCED MODE - Uses Kimi for Coding (k2p5) via subscription, falls back to antigravity",
+  "agents": {
+    "sisyphus": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "google/antigravity-claude-opus-4-5-thinking",
+        "google/antigravity-claude-sonnet-4-5"
+      ]
+    },
+    "atlas": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "google/antigravity-claude-opus-4-5-thinking",
+        "google/antigravity-claude-sonnet-4-5"
+      ]
+    },
+    "oracle": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "google/antigravity-claude-opus-4-5-thinking",
+        "google/antigravity-gemini-3-pro-preview"
+      ]
+    },
+    "explore": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "google/antigravity-gemini-3-flash",
+        "github-copilot/gpt-5-mini"
+      ]
+    },
+    "librarian": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "google/antigravity-claude-sonnet-4-5",
+        "google/antigravity-glm-4.7-free"
+      ]
+    },
+    "frontend-ui-ux-engineer": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "google/antigravity-claude-sonnet-4-5"
+      ]
+    },
+    "document-writer": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "google/antigravity-gemini-3-flash"
+      ]
+    },
+    "multimodal-looker": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "google/antigravity-gemini-3-flash"
+      ]
+    },
+    "metis": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "google/antigravity-claude-sonnet-4-5"
+      ]
+    },
+    "prometheus": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "google/antigravity-claude-opus-4-5-thinking"
+      ]
+    },
+    "momus": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "google/antigravity-claude-opus-4-5-thinking"
+      ]
+    }
+  },
+  "categories": {
+    "quick": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "google/antigravity-gemini-3-flash"
+      ]
+    },
+    "unspecified-low": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "google/antigravity-gemini-3-flash"
+      ]
+    },
+    "deep": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "google/antigravity-claude-opus-4-5-thinking"
+      ]
+    },
+    "artistry": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "google/antigravity-claude-opus-4-5-thinking"
+      ]
+    },
+    "ultrabrain": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "google/antigravity-claude-opus-4-5-thinking"
+      ]
+    },
+    "visual-engineering": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "google/antigravity-claude-sonnet-4-5"
+      ]
+    }
+  }
+}
