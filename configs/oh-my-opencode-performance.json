@@ -8,7 +8,6 @@
       "fallbackChain": [
         "kimi-for-coding/k2p5",
         "opencode/kimi-k2.5",
-        "synthetic/hf:deepseek-ai/DeepSeek-V3.2",
         "google/antigravity-claude-opus-4-5-thinking",
         "synthetic/hf:Qwen/Qwen3-Coder-480B-A35B-Instruct"
       ]
@@ -18,7 +17,6 @@
       "fallbackChain": [
         "google/antigravity-claude-opus-4-5-thinking",
         "kimi-for-coding/k2p5",
-        "synthetic/hf:deepseek-ai/DeepSeek-V3.2",
         "opencode/claude-opus-4-5"
       ]
     },
@@ -27,14 +25,12 @@
       "fallbackChain": [
         "google/antigravity-claude-opus-4-5-thinking",
         "google/antigravity-gemini-3-pro",
-        "synthetic/hf:deepseek-ai/DeepSeek-R1-0528",
         "kimi-for-coding/k2p5"
       ]
     },
     "explore": {
-      "model": "synthetic/hf:deepseek-ai/DeepSeek-V3.2",
+      "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
-        "synthetic/hf:deepseek-ai/DeepSeek-V3.2",
         "kimi-for-coding/k2p5",
         "opencode/kimi-k2.5",
         "google/antigravity-gemini-3-flash",
@@ -47,7 +43,6 @@
         "google/antigravity-gemini-3-flash",
         "opencode/kimi-k2.5",
         "kimi-for-coding/k2p5",
-        "synthetic/hf:deepseek-ai/DeepSeek-V3.2",
         "opencode/glm-4.7-free"
       ]
     },
@@ -56,7 +51,6 @@
       "fallbackChain": [
         "opencode/claude-sonnet-4-5",
         "kimi-for-coding/k2p5",
-        "synthetic/hf:deepseek-ai/DeepSeek-V3.2",
         "synthetic/hf:zai-org/GLM-4.7",
         "google/antigravity-claude-sonnet-4-5"
       ]
@@ -67,8 +61,7 @@
         "kimi-for-coding/k2p5",
         "opencode/kimi-k2.5",
         "opencode/glm-4.7",
-        "google/antigravity-gemini-3-flash",
-        "synthetic/hf:deepseek-ai/DeepSeek-V3.2"
+        "google/antigravity-gemini-3-flash"
       ]
     },
     "multimodal-looker": {
@@ -85,9 +78,7 @@
       "fallbackChain": [
         "opencode/kimi-k2.5",
         "kimi-for-coding/k2p5",
-        "synthetic/hf:deepseek-ai/DeepSeek-R1-0528",
-        "google/antigravity-claude-sonnet-4-5",
-        "synthetic/hf:deepseek-ai/DeepSeek-V3.2"
+        "google/antigravity-claude-sonnet-4-5"
       ]
     },
     "prometheus": {
@@ -95,9 +86,7 @@
       "fallbackChain": [
         "google/antigravity-claude-opus-4-5-thinking",
         "google/antigravity-gemini-3-pro",
-        "synthetic/hf:deepseek-ai/DeepSeek-R1-0528",
-        "kimi-for-coding/k2p5",
-        "synthetic/hf:deepseek-ai/DeepSeek-V3.2"
+        "kimi-for-coding/k2p5"
       ]
     },
     "momus": {
@@ -105,9 +94,15 @@
       "fallbackChain": [
         "google/antigravity-claude-opus-4-5-thinking",
         "google/antigravity-gemini-3-pro",
-        "synthetic/hf:deepseek-ai/DeepSeek-R1-0528",
-        "kimi-for-coding/k2p5",
-        "synthetic/hf:deepseek-ai/DeepSeek-V3.2"
+        "kimi-for-coding/k2p5"
+      ]
+    },
+    "hephaestus": {
+      "model": "google/antigravity-claude-opus-4-5-thinking",
+      "fallbackChain": [
+        "google/antigravity-claude-opus-4-5-thinking",
+        "google/antigravity-gemini-3-pro",
+        "kimi-for-coding/k2p5"
       ]
     }
   },
@@ -118,7 +113,6 @@
         "google/antigravity-gemini-3-flash",
         "opencode/kimi-k2.5",
         "kimi-for-coding/k2p5",
-        "synthetic/hf:deepseek-ai/DeepSeek-V3.2",
         "opencode/gemini-3-flash"
       ]
     },
@@ -128,8 +122,7 @@
         "opencode/glm-4.7-free",
         "opencode/kimi-k2.5-free",
         "google/antigravity-gemini-3-flash",
-        "kimi-for-coding/k2p5",
-        "synthetic/hf:deepseek-ai/DeepSeek-V3.2"
+        "kimi-for-coding/k2p5"
       ]
     },
     "deep": {
@@ -137,9 +130,7 @@
       "fallbackChain": [
         "google/antigravity-claude-opus-4-5-thinking",
         "google/antigravity-gemini-3-pro",
-        "synthetic/hf:deepseek-ai/DeepSeek-R1-0528",
-        "kimi-for-coding/k2p5",
-        "synthetic/hf:deepseek-ai/DeepSeek-V3.2"
+        "kimi-for-coding/k2p5"
       ]
     },
     "artistry": {
@@ -147,7 +138,6 @@
       "fallbackChain": [
         "kimi-for-coding/k2p5",
         "opencode/kimi-k2.5",
-        "synthetic/hf:deepseek-ai/DeepSeek-V3.2",
         "google/antigravity-claude-opus-4-5-thinking",
         "synthetic/hf:Qwen/Qwen3-Coder-480B-A35B-Instruct"
       ]
@@ -157,9 +147,7 @@
       "fallbackChain": [
         "google/antigravity-claude-opus-4-5-thinking",
         "google/antigravity-gemini-3-pro",
-        "synthetic/hf:deepseek-ai/DeepSeek-R1-0528",
-        "kimi-for-coding/k2p5",
-        "synthetic/hf:deepseek-ai/DeepSeek-V3.2"
+        "kimi-for-coding/k2p5"
       ]
     },
     "visual-engineering": {
@@ -167,7 +155,6 @@
       "fallbackChain": [
         "opencode/claude-sonnet-4-5",
         "kimi-for-coding/k2p5",
-        "synthetic/hf:deepseek-ai/DeepSeek-V3.2",
         "google/antigravity-claude-sonnet-4-5",
         "synthetic/hf:zai-org/GLM-4.7"
       ]

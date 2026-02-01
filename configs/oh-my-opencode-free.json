@@ -9,7 +9,6 @@
         "opencode/kimi-k2.5-free",
         "opencode/glm-4.7-free",
         "kimi-for-coding/k2p5",
-        "synthetic/hf:deepseek-ai/DeepSeek-V3.2",
         "google/antigravity-claude-sonnet-4-5"
       ]
     },
@@ -18,8 +17,7 @@
       "fallbackChain": [
         "google/antigravity-claude-opus-4-5-thinking",
         "opencode/kimi-k2.5-free",
-        "kimi-for-coding/k2p5",
-        "synthetic/hf:deepseek-ai/DeepSeek-V3.2"
+        "kimi-for-coding/k2p5"
       ]
     },
     "oracle": {
@@ -28,14 +26,12 @@
         "google/antigravity-claude-opus-4-5-thinking",
         "opencode/kimi-k2.5-free",
         "opencode/glm-4.7-free",
-        "synthetic/hf:deepseek-ai/DeepSeek-R1-0528",
         "kimi-for-coding/k2p5"
       ]
     },
     "explore": {
-      "model": "synthetic/hf:deepseek-ai/DeepSeek-V3.2",
+      "model": "opencode/kimi-k2.5-free",
       "fallbackChain": [
-        "synthetic/hf:deepseek-ai/DeepSeek-V3.2",
         "opencode/kimi-k2.5-free",
         "opencode/glm-4.7-free",
         "opencode/trinity-large-preview-free",
@@ -48,8 +44,7 @@
         "google/antigravity-gemini-3-flash",
         "opencode/kimi-k2.5-free",
         "opencode/minimax-m2.1-free",
-        "kimi-for-coding/k2p5",
-        "synthetic/hf:deepseek-ai/DeepSeek-V3.2"
+        "kimi-for-coding/k2p5"
       ]
     },
     "frontend-ui-ux-engineer": {
@@ -58,8 +53,7 @@
         "opencode/claude-sonnet-4-5",
         "opencode/kimi-k2.5-free",
         "opencode/glm-4.7-free",
-        "kimi-for-coding/k2p5",
-        "synthetic/hf:deepseek-ai/DeepSeek-V3.2"
+        "kimi-for-coding/k2p5"
       ]
     },
     "document-writer": {
@@ -87,8 +81,7 @@
         "opencode/kimi-k2.5-free",
         "opencode/glm-4.7-free",
         "kimi-for-coding/k2p5",
-        "google/antigravity-claude-sonnet-4-5",
-        "synthetic/hf:deepseek-ai/DeepSeek-R1-0528"
+        "google/antigravity-claude-sonnet-4-5"
       ]
     },
     "prometheus": {
@@ -97,7 +90,6 @@
         "google/antigravity-claude-opus-4-5-thinking",
         "opencode/kimi-k2.5-free",
         "opencode/glm-4.7-free",
-        "synthetic/hf:deepseek-ai/DeepSeek-R1-0528",
         "kimi-for-coding/k2p5"
       ]
     },
@@ -107,7 +99,16 @@
         "google/antigravity-claude-opus-4-5-thinking",
         "opencode/kimi-k2.5-free",
         "opencode/glm-4.7-free",
-        "synthetic/hf:deepseek-ai/DeepSeek-R1-0528",
+        "kimi-for-coding/k2p5"
+      ]
+    },
+    "hephaestus": {
+      "model": "google/antigravity-claude-opus-4-5-thinking",
+      "fallbackChain": [
+        "google/antigravity-claude-opus-4-5-thinking",
+        "google/antigravity-gemini-3-pro",
+        "opencode/kimi-k2.5-free",
+        "opencode/glm-4.7-free",
         "kimi-for-coding/k2p5"
       ]
     }
@@ -119,8 +120,7 @@
         "opencode/gpt-5-nano",
         "opencode/glm-4.7-free",
         "opencode/kimi-k2.5-free",
-        "google/antigravity-gemini-3-flash",
-        "synthetic/hf:deepseek-ai/DeepSeek-V3.2"
+        "google/antigravity-gemini-3-flash"
       ]
     },
     "unspecified-low": {
@@ -139,7 +139,6 @@
         "google/antigravity-claude-opus-4-5-thinking",
         "opencode/kimi-k2.5-free",
         "opencode/glm-4.7-free",
-        "synthetic/hf:deepseek-ai/DeepSeek-R1-0528",
         "kimi-for-coding/k2p5"
       ]
     },
@@ -149,7 +148,6 @@
         "opencode/kimi-k2.5-free",
         "opencode/glm-4.7-free",
         "kimi-for-coding/k2p5",
-        "synthetic/hf:deepseek-ai/DeepSeek-V3.2",
         "google/antigravity-claude-opus-4-5-thinking"
       ]
     },
@@ -159,7 +157,6 @@
         "google/antigravity-claude-opus-4-5-thinking",
         "opencode/kimi-k2.5-free",
         "opencode/glm-4.7-free",
-        "synthetic/hf:deepseek-ai/DeepSeek-R1-0528",
         "kimi-for-coding/k2p5"
       ]
     },
@@ -169,8 +166,7 @@
         "opencode/claude-sonnet-4-5",
         "opencode/kimi-k2.5-free",
         "opencode/glm-4.7-free",
-        "kimi-for-coding/k2p5",
-        "synthetic/hf:deepseek-ai/DeepSeek-V3.2"
+        "kimi-for-coding/k2p5"
       ]
     }
   }
