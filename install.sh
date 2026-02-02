@@ -1,13 +1,18 @@
 #!/bin/bash
 
 # OpenCode Configs Installer
-# This script installs opencode configuration files and sets up the environment
+# This script installs opencode configuration files and sets up environment
 
 set -e
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_DIR="$HOME/.config/opencode"
 BACKUP_DIR="$CONFIG_DIR/backups/$(date +%Y%m%d-%H%M%S)"
+
+# Source version utilities library
+if [ -f "$SCRIPT_DIR/scripts/lib/version-utils.sh" ]; then
+    source "$SCRIPT_DIR/scripts/lib/version-utils.sh"
+fi
 
 # Colors for output
 RED='\033[0;31m'
@@ -30,6 +35,170 @@ print_warning() {
 
 print_error() {
     echo -e "${RED}[ERROR]${NC} $1"
+}
+
+# Download remote configs to temp directory
+download_remote_configs() {
+    local temp_dir="$1"
+    local base_url="https://raw.githubusercontent.com/joshhmann/opencode-configs/main/configs"
+    local configs="oh-my-opencode-free.json oh-my-opencode-balanced.json oh-my-opencode-performance.json oh-my-opencode-gemini-free.json oh-my-opencode-gemini-balanced.json oh-my-opencode-gemini-performance.json"
+
+    for config in $configs; do
+        if ! curl -fsSL -m 30 "$base_url/$config" -o "$temp_dir/$config" 2>/dev/null; then
+            echo "ERROR: Failed to download $config" >&2
+            return 1
+        fi
+    done
+    return 0
+}
+
+# Validate downloaded configs
+validate_configs() {
+    local temp_dir="$1"
+    local has_error=0
+
+    for config in "$temp_dir"/*.json; do
+        if [ -f "$config" ]; then
+            local basename=$(basename "$config")
+
+            # Validate JSON syntax
+            if ! python3 -c "import json; json.load(open('$config'))" 2>/dev/null; then
+                echo "ERROR: Invalid JSON in $basename" >&2
+                has_error=1
+                continue
+            fi
+
+            # Verify _version field exists
+            if ! grep -q '"_version"' "$config"; then
+                echo "ERROR: Missing _version in $basename" >&2
+                has_error=1
+                continue
+            fi
+        fi
+    done
+
+    return $has_error
+}
+
+# Detect installation type (git clone or curl download)
+get_install_type() {
+    if [ -d "$SCRIPT_DIR/.git" ]; then
+        echo "git"
+    else
+        echo "curl"
+    fi
+}
+
+# Get remote version from GitHub
+get_remote_version() {
+    local remote_url="https://raw.githubusercontent.com/joshhmann/opencode-configs/main/configs/oh-my-opencode-balanced.json"
+
+    local remote_data
+    remote_data=$(curl -fsSL --max-time 10 --connect-timeout 5 "$remote_url" 2>/dev/null)
+
+    if [ $? -ne 0 ] || [ -z "$remote_data" ]; then
+        print_error "Failed to fetch remote version (network error)" >&2
+        return 2
+    fi
+
+    local version
+    version=$(echo "$remote_data" | grep '"_version"' | head -1 | grep -o '[0-9]\+\.[0-9]\+\.[0-9]\+' | head -1)
+
+    if [ -z "$version" ]; then
+        print_error "Failed to extract version from remote config" >&2
+        return 2
+    fi
+
+    echo "$version"
+    return 0
+}
+
+# Check for updates
+check_updates() {
+    print_info "Checking for updates..."
+
+    local install_type=$(get_install_type)
+
+    if [ "$install_type" = "git" ]; then
+        cd "$SCRIPT_DIR"
+
+        if ! git fetch origin --quiet 2>/dev/null; then
+            print_error "Failed to fetch from git remote"
+            return 2
+        fi
+
+        local local_commit=$(git rev-parse HEAD 2>/dev/null)
+        local remote_commit=$(git rev-parse origin/main 2>/dev/null)
+
+        if [ -z "$local_commit" ] || [ -z "$remote_commit" ]; then
+            print_error "Failed to get git commit information"
+            return 2
+        fi
+
+        if [ "$local_commit" != "$remote_commit" ]; then
+            print_success "Update available (git)"
+            echo "  Local:  $local_commit"
+            echo "  Remote: $remote_commit"
+            return 0
+        else
+            print_success "No updates available (up to date)"
+            return 1
+        fi
+    else
+        local config_file="$CONFIG_DIR/oh-my-opencode-balanced.json"
+
+        if [ ! -f "$config_file" ]; then
+            print_error "Config file not found: $config_file"
+            return 2
+        fi
+
+        if ! command -v get_config_version >/dev/null 2>&1; then
+            print_error "version-utils.sh not loaded"
+            return 2
+        fi
+
+        local local_version
+        local_version=$(get_config_version "$config_file")
+        if [ $? -ne 0 ] || [ -z "$local_version" ]; then
+            print_error "Failed to extract local version"
+            return 2
+        fi
+
+        local remote_version
+        remote_version=$(get_remote_version)
+        local get_result=$?
+
+        if [ $get_result -ne 0 ]; then
+            return $get_result
+        fi
+
+        version_compare "$local_version" "$remote_version"
+        local compare_result=$?
+
+        case $compare_result in
+            0)
+                print_success "No updates available (up to date)"
+                echo "  Version: $local_version"
+                return 1
+                ;;
+            1)
+                print_warning "Local version is newer than remote"
+                echo "  Local:  $local_version"
+                echo "  Remote: $remote_version"
+                return 1
+                ;;
+            2)
+                print_success "Update available"
+                echo "  Local:  $local_version"
+                echo "  Remote: $remote_version"
+                return 0
+                ;;
+            *)
+                print_error "Version comparison failed"
+                return 2
+                ;;
+        esac
+    fi
 }
 
 # Check if opencode is installed
@@ -231,4 +400,9 @@ main() {
 }
 
 # Run main function
+if [[ "$1" == "--check-updates" ]]; then
+    check_updates
+    exit $?
+fi
+
 main "$@"

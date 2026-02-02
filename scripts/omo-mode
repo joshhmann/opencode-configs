@@ -6,6 +6,14 @@
 CONFIG_DIR="$HOME/.config/opencode"
 CURRENT_CONFIG="$CONFIG_DIR/oh-my-opencode.json"
 
+# Source version utilities
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+if [ -f "$SCRIPT_DIR/lib/version-utils.sh" ]; then
+    source "$SCRIPT_DIR/lib/version-utils.sh"
+elif [ -f "$CONFIG_DIR/lib/version-utils.sh" ]; then
+    source "$CONFIG_DIR/lib/version-utils.sh"
+fi
+
 show_help() {
     echo "Oh My OpenCode Mode Switcher"
     echo ""
@@ -16,6 +24,7 @@ show_help() {
     echo "  balanced    - Uses kimi-for-coding k2p5 via subscription, falls back to antigravity"
     echo "  performance - Maximum quality with kimi-for-coding k2p5 as primary"
     echo "  list        - Show available modes and current status"
+    echo "  check-update - Check for available updates"
     echo ""
     echo "Examples:"
     echo "  omo-mode free       # Switch to free/frugal mode"
@@ -101,6 +110,102 @@ switch_mode() {
     echo "Restart any running opencode sessions to apply the changes."
 }
 
+check_update() {
+    echo "Current Oh My OpenCode Mode:"
+    echo ""
+    
+    # Get current mode from symlink
+    local current_mode="unknown"
+    local local_version="unknown"
+    if [ -L "$CURRENT_CONFIG" ]; then
+        local target=$(readlink "$CURRENT_CONFIG")
+        current_mode=$(basename "$target" .json | sed 's/oh-my-opencode-//')
+        if [ -f "$target" ] && command -v get_config_version &> /dev/null; then
+            local_version=$(get_config_version "$target")
+        fi
+    fi
+    
+    echo "  Active: $current_mode"
+    echo "  Local version: $local_version"
+    
+    # Get remote version
+    local remote_version="unknown"
+    local base_url="https://raw.githubusercontent.com/joshhmann/opencode-configs/main/configs"
+    local temp_file=$(mktemp)
+    
+    if curl -fsSL -m 10 "$base_url/oh-my-opencode-${current_mode}.json" -o "$temp_file" 2>/dev/null; then
+        if command -v get_config_version &> /dev/null; then
+            remote_version=$(get_config_version "$temp_file")
+        fi
+    fi
+    rm -f "$temp_file"
+    
+    echo "  Remote version: $remote_version"
+    
+    # Compare versions
+    if [ "$local_version" != "unknown" ] && [ "$remote_version" != "unknown" ]; then
+        if command -v version_compare &> /dev/null; then
+            version_compare "$local_version" "$remote_version"
+            case $? in
+                0) echo "  Status: Up to date" ;;
+                1) echo "  Status: Local is newer (development?)" ;;
+                2) echo "  Status: Update available" ;;
+            esac
+        else
+            if [ "$local_version" = "$remote_version" ]; then
+                echo "  Status: Up to date"
+            else
+                echo "  Status: Version mismatch (local: $local_version, remote: $remote_version)"
+            fi
+        fi
+    else
+        echo "  Status: Could not determine update status"
+    fi
+}
+
+# Download remote configs to temp directory
+download_remote_configs() {
+    local temp_dir="$1"
+    local base_url="https://raw.githubusercontent.com/joshhmann/opencode-configs/main/configs"
+    local configs="oh-my-opencode-free.json oh-my-opencode-balanced.json oh-my-opencode-performance.json oh-my-opencode-gemini-free.json oh-my-opencode-gemini-balanced.json oh-my-opencode-gemini-performance.json"
+
+    for config in $configs; do
+        if ! curl -fsSL -m 30 "$base_url/$config" -o "$temp_dir/$config" 2>/dev/null; then
+            echo "ERROR: Failed to download $config" >&2
+            return 1
+        fi
+    done
+    return 0
+}
+
+# Validate downloaded configs
+validate_configs() {
+    local temp_dir="$1"
+    local has_error=0
+
+    for config in "$temp_dir"/*.json; do
+        if [ -f "$config" ]; then
+            local basename=$(basename "$config")
+
+            # Validate JSON syntax
+            if ! python3 -c "import json; json.load(open('$config'))" 2>/dev/null; then
+                echo "ERROR: Invalid JSON in $basename" >&2
+                has_error=1
+                continue
+            fi
+
+            # Verify _version field exists
+            if ! grep -q '"_version"' "$config"; then
+                echo "ERROR: Missing _version in $basename" >&2
+                has_error=1
+                continue
+            fi
+        fi
+    done
+
+    return $has_error
+}
+
 # Main
 case "${1:-}" in
     -h|--help|help)
@@ -117,6 +222,10 @@ case "${1:-}" in
         ;;
     "")
         show_status
+        exit 0
+        ;;
+    check-update)
+        check_update
         exit 0
         ;;
     *)
