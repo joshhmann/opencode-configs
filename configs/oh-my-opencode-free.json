@@ -1,5 +1,9 @@
 {
   "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/master/assets/oh-my-opencode.schema.json",
+  "_version": "1.0.0",
+  "_updated": "2026-02-02T12:00:00Z",
+  "_schema_version": "1",
+  "_source": "https://github.com/joshhmann/opencode-configs",
   "google_auth": false,
   "_description": "FREE/FRUGAL MODE - Free models primary, with strategic distribution across providers",
   "agents": {

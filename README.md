@@ -38,11 +38,13 @@ This repository provides pre-configured OpenCode setups with multiple modes:
 
 ### Features
 
-- ✅ **Multi-mode configuration** - Switch between free, balanced, and performance modes
+- ✅ **Multi-mode configuration** - Switch between free, balanced, performance, and Gemini-focused modes
 - ✅ **Smart fallbacks** - Automatic fallback chains when primary models fail
 - ✅ **Shell aliases** - Quick mode switching with `omof`, `omob`, `omop`
 - ✅ **Easy installation** - One-command setup with `./install.sh`
 - ✅ **Backup system** - Automatic backups of existing configs
+- ✅ **Update checking** - Check for new config versions with `--check-updates`
+- ✅ **Atomic updates** - Safe updates with automatic backups and validation
 
 ## 📦 Installation
 
@@ -71,6 +73,51 @@ cd opencode-configs
 # 3. Source your shell config
 source ~/.bashrc  # or ~/.zshrc for zsh users
 ```
+
+## 🔄 Updating
+
+### Check for Updates
+
+You can check if new config versions are available:
+
+```bash
+# From the repository
+./install.sh --check-updates
+
+# From installed location
+~/.config/opencode/omo-mode check-update
+```
+
+### Apply Updates
+
+Update your configs to the latest version:
+
+```bash
+# From the repository (batch mode)
+./install.sh --update
+
+# From installed location (interactive)
+~/.config/opencode/omo-mode update
+
+# Non-interactive mode (for scripts/automation)
+~/.config/opencode/omo-mode update --yes
+./install.sh --update --yes
+```
+
+**What happens during an update:**
+1. Creates a backup of your current configs
+2. Downloads latest configs from GitHub
+3. Validates the downloaded configs
+4. Applies updates atomically
+5. Preserves your `opencode.json` (API keys are never touched)
+6. Stores new config hashes for modification detection
+
+**Safety features:**
+- Automatic backups before any changes
+- Config validation before applying
+- Modified config detection (warns if you've customized configs)
+- Rollback on any error
+- Never overwrites your API keys in `opencode.json`
 
 ## ⚙️ Configuration
 
