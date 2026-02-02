@@ -5,15 +5,15 @@
   "_schema_version": "1",
   "_source": "https://github.com/joshhmann/opencode-configs",
   "google_auth": false,
-  "_description": "PERFORMANCE MODE - Load balanced: Heavy agents on antigravity, others distributed across kimi/synthetic/opencode",
+  "_description": "PERFORMANCE TIER - Antigravity Opus 4.5 / Sonnet 4.5 as primary models with maximum capability focus",
   "agents": {
     "sisyphus": {
       "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
         "kimi-for-coding/k2p5",
-        "opencode/kimi-k2.5",
         "google/antigravity-claude-opus-4-5-thinking",
-        "synthetic/hf:Qwen/Qwen3-Coder-480B-A35B-Instruct"
+        "opencode/kimi-k2.5",
+        "opencode/claude-opus-4-5"
       ]
     },
     "atlas": {
@@ -21,15 +21,17 @@
       "fallbackChain": [
         "google/antigravity-claude-opus-4-5-thinking",
         "kimi-for-coding/k2p5",
-        "opencode/claude-opus-4-5"
+        "opencode/claude-opus-4-5",
+        "opencode/kimi-k2.5"
       ]
     },
     "oracle": {
       "model": "google/antigravity-claude-opus-4-5-thinking",
       "fallbackChain": [
         "google/antigravity-claude-opus-4-5-thinking",
-        "google/antigravity-gemini-3-pro",
-        "kimi-for-coding/k2p5"
+        "kimi-for-coding/k2p5",
+        "opencode/claude-opus-4-5",
+        "opencode/kimi-k2.5"
       ]
     },
     "explore": {
@@ -89,24 +91,27 @@
       "model": "google/antigravity-claude-opus-4-5-thinking",
       "fallbackChain": [
         "google/antigravity-claude-opus-4-5-thinking",
-        "google/antigravity-gemini-3-pro",
-        "kimi-for-coding/k2p5"
+        "kimi-for-coding/k2p5",
+        "opencode/claude-opus-4-5",
+        "opencode/kimi-k2.5"
       ]
     },
     "momus": {
       "model": "google/antigravity-claude-opus-4-5-thinking",
       "fallbackChain": [
         "google/antigravity-claude-opus-4-5-thinking",
-        "google/antigravity-gemini-3-pro",
-        "kimi-for-coding/k2p5"
+        "kimi-for-coding/k2p5",
+        "opencode/claude-opus-4-5",
+        "opencode/kimi-k2.5"
       ]
     },
     "hephaestus": {
       "model": "google/antigravity-claude-opus-4-5-thinking",
       "fallbackChain": [
         "google/antigravity-claude-opus-4-5-thinking",
-        "google/antigravity-gemini-3-pro",
-        "kimi-for-coding/k2p5"
+        "kimi-for-coding/k2p5",
+        "opencode/claude-opus-4-5",
+        "opencode/kimi-k2.5"
       ]
     }
   },

@@ -5,29 +5,33 @@
   "_schema_version": "1",
   "_source": "https://github.com/joshhmann/opencode-configs",
   "google_auth": false,
-  "_description": "BALANCED MODE - Load balanced distribution across all providers",
+  "_description": "BALANCED TIER - Antigravity Opus 4.5 / Sonnet 4.5 as main models for premium agents with strategic fallbacks",
   "agents": {
     "sisyphus": {
       "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
         "kimi-for-coding/k2p5",
+        "google/antigravity-claude-opus-4-5-thinking",
         "opencode/kimi-k2.5",
-        "google/antigravity-claude-opus-4-5-thinking"
+        "opencode/claude-sonnet-4-5"
       ]
     },
     "atlas": {
       "model": "google/antigravity-claude-opus-4-5-thinking",
       "fallbackChain": [
         "google/antigravity-claude-opus-4-5-thinking",
-        "kimi-for-coding/k2p5"
+        "kimi-for-coding/k2p5",
+        "opencode/claude-opus-4-5",
+        "opencode/kimi-k2.5"
       ]
     },
     "oracle": {
       "model": "google/antigravity-claude-opus-4-5-thinking",
       "fallbackChain": [
         "google/antigravity-claude-opus-4-5-thinking",
-        "google/antigravity-gemini-3-pro",
-        "kimi-for-coding/k2p5"
+        "kimi-for-coding/k2p5",
+        "opencode/claude-opus-4-5",
+        "opencode/kimi-k2.5"
       ]
     },
     "explore": {
@@ -47,11 +51,12 @@
       ]
     },
     "frontend-ui-ux-engineer": {
-      "model": "opencode/claude-sonnet-4-5",
+      "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
-        "opencode/claude-sonnet-4-5",
         "kimi-for-coding/k2p5",
-        "google/antigravity-claude-sonnet-4-5"
+        "opencode/kimi-k2.5",
+        "opencode/claude-sonnet-4-5",
+        "google/antigravity-claude-opus-4-5-thinking"
       ]
     },
     "document-writer": {
@@ -83,24 +88,27 @@
       "model": "google/antigravity-claude-opus-4-5-thinking",
       "fallbackChain": [
         "google/antigravity-claude-opus-4-5-thinking",
-        "google/antigravity-gemini-3-pro",
-        "kimi-for-coding/k2p5"
+        "kimi-for-coding/k2p5",
+        "opencode/claude-opus-4-5",
+        "opencode/kimi-k2.5"
       ]
     },
     "momus": {
       "model": "google/antigravity-claude-opus-4-5-thinking",
       "fallbackChain": [
         "google/antigravity-claude-opus-4-5-thinking",
-        "google/antigravity-gemini-3-pro",
-        "kimi-for-coding/k2p5"
+        "kimi-for-coding/k2p5",
+        "opencode/claude-opus-4-5",
+        "opencode/kimi-k2.5"
       ]
     },
     "hephaestus": {
       "model": "google/antigravity-claude-opus-4-5-thinking",
       "fallbackChain": [
         "google/antigravity-claude-opus-4-5-thinking",
-        "google/antigravity-gemini-3-pro",
-        "kimi-for-coding/k2p5"
+        "kimi-for-coding/k2p5",
+        "opencode/claude-opus-4-5",
+        "opencode/kimi-k2.5"
       ]
     }
   },
@@ -147,11 +155,12 @@
       ]
     },
     "visual-engineering": {
-      "model": "opencode/claude-sonnet-4-5",
+      "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
-        "opencode/claude-sonnet-4-5",
         "kimi-for-coding/k2p5",
-        "google/antigravity-claude-sonnet-4-5"
+        "opencode/kimi-k2.5",
+        "opencode/claude-sonnet-4-5",
+        "google/antigravity-claude-opus-4-5-thinking"
       ]
     }
   }

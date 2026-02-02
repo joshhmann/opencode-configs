@@ -1,0 +1,191 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-opencode/master/assets/oh-my-opencode.schema.json",
+  "_version": "1.0.0",
+  "_updated": "2026-02-02T12:00:00Z",
+  "_schema_version": "1",
+  "_source": "https://github.com/joshhmann/opencode-configs",
+  "google_auth": false,
+  "_description": "KIMI K2.5 TIER - Utilizing available Kimi and Synthetic model subscriptions",
+  "agents": {
+    "sisyphus": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "opencode/kimi-k2.5",
+        "synthetic/hf:Qwen/Qwen3-Coder-480B-A35B-Instruct",
+        "synthetic/hf:zai-org/GLM-4.7",
+        "opencode/kimi-k2.5-free"
+      ]
+    },
+    "atlas": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "opencode/kimi-k2.5",
+        "synthetic/hf:Qwen/Qwen3-Coder-480B-A35B-Instruct",
+        "synthetic/hf:zai-org/GLM-4.7",
+        "opencode/kimi-k2.5-free"
+      ]
+    },
+    "oracle": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "opencode/kimi-k2.5",
+        "synthetic/hf:Qwen/Qwen3-Coder-480B-A35B-Instruct",
+        "synthetic/hf:zai-org/GLM-4.7",
+        "opencode/kimi-k2.5-free"
+      ]
+    },
+    "explore": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "opencode/kimi-k2.5",
+        "synthetic/hf:zai-org/GLM-4.7",
+        "opencode/glm-4.7-free",
+        "opencode/kimi-k2.5-free"
+      ]
+    },
+    "librarian": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "opencode/kimi-k2.5",
+        "synthetic/hf:zai-org/GLM-4.7",
+        "synthetic/hf:Qwen/Qwen3-Coder-480B-A35B-Instruct",
+        "opencode/kimi-k2.5-free"
+      ]
+    },
+    "frontend-ui-ux-engineer": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "opencode/kimi-k2.5",
+        "synthetic/hf:zai-org/GLM-4.7",
+        "synthetic/hf:Qwen/Qwen3-Coder-480B-A35B-Instruct",
+        "opencode/kimi-k2.5-free"
+      ]
+    },
+    "document-writer": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "opencode/kimi-k2.5",
+        "synthetic/hf:zai-org/GLM-4.7",
+        "synthetic/hf:Qwen/Qwen3-Coder-480B-A35B-Instruct",
+        "opencode/kimi-k2.5-free"
+      ]
+    },
+    "multimodal-looker": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "opencode/kimi-k2.5",
+        "synthetic/hf:zai-org/GLM-4.7",
+        "synthetic/hf:Qwen/Qwen3-Coder-480B-A35B-Instruct",
+        "opencode/kimi-k2.5-free"
+      ]
+    },
+    "metis": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "opencode/kimi-k2.5",
+        "synthetic/hf:Qwen/Qwen3-Coder-480B-A35B-Instruct",
+        "synthetic/hf:zai-org/GLM-4.7",
+        "opencode/kimi-k2.5-free"
+      ]
+    },
+    "prometheus": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "opencode/kimi-k2.5",
+        "synthetic/hf:Qwen/Qwen3-Coder-480B-A35B-Instruct",
+        "synthetic/hf:zai-org/GLM-4.7",
+        "opencode/kimi-k2.5-free"
+      ]
+    },
+    "momus": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "opencode/kimi-k2.5",
+        "synthetic/hf:Qwen/Qwen3-Coder-480B-A35B-Instruct",
+        "synthetic/hf:zai-org/GLM-4.7",
+        "opencode/kimi-k2.5-free"
+      ]
+    },
+    "hephaestus": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "opencode/kimi-k2.5",
+        "synthetic/hf:Qwen/Qwen3-Coder-480B-A35B-Instruct",
+        "synthetic/hf:zai-org/GLM-4.7",
+        "opencode/kimi-k2.5-free"
+      ]
+    }
+  },
+  "categories": {
+    "quick": {
+      "model": "opencode/gpt-5-nano",
+      "fallbackChain": [
+        "opencode/gpt-5-nano",
+        "opencode/kimi-k2.5-free",
+        "synthetic/hf:zai-org/GLM-4.7",
+        "kimi-for-coding/k2p5"
+      ]
+    },
+    "unspecified-low": {
+      "model": "synthetic/hf:zai-org/GLM-4.7",
+      "fallbackChain": [
+        "synthetic/hf:zai-org/GLM-4.7",
+        "opencode/glm-4.7-free",
+        "opencode/kimi-k2.5-free",
+        "kimi-for-coding/k2p5"
+      ]
+    },
+    "deep": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "opencode/kimi-k2.5",
+        "synthetic/hf:Qwen/Qwen3-Coder-480B-A35B-Instruct",
+        "synthetic/hf:zai-org/GLM-4.7",
+        "opencode/kimi-k2.5-free"
+      ]
+    },
+    "artistry": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "opencode/kimi-k2.5",
+        "synthetic/hf:Qwen/Qwen3-Coder-480B-A35B-Instruct",
+        "synthetic/hf:zai-org/GLM-4.7",
+        "opencode/kimi-k2.5-free"
+      ]
+    },
+    "ultrabrain": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "opencode/kimi-k2.5",
+        "synthetic/hf:Qwen/Qwen3-Coder-480B-A35B-Instruct",
+        "synthetic/hf:zai-org/GLM-4.7",
+        "opencode/kimi-k2.5-free"
+      ]
+    },
+    "visual-engineering": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "opencode/kimi-k2.5",
+        "synthetic/hf:zai-org/GLM-4.7",
+        "synthetic/hf:Qwen/Qwen3-Coder-480B-A35B-Instruct",
+        "opencode/kimi-k2.5-free"
+      ]
+    }
+  }
+}
