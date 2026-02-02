@@ -37,11 +37,87 @@ print_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
+# Create backup with label
+create_backup() {
+    local label="$1"
+    local timestamp=$(date +%Y%m%d-%H%M%S)
+    local backup_path="$CONFIG_DIR/backups/${timestamp}-${label}"
+
+    print_info "Creating backup: ${label}"
+
+    if [ ! -d "$CONFIG_DIR" ]; then
+        print_warning "Config directory does not exist, nothing to backup"
+        return 0
+    fi
+
+    mkdir -p "$backup_path"
+
+    # Backup all JSON config files
+    local backup_count=0
+    for file in "$CONFIG_DIR"/*.json; do
+        if [ -f "$file" ] && [ ! -L "$file" ]; then
+            cp "$file" "$backup_path/"
+            backup_count=$((backup_count + 1))
+        fi
+    done
+
+    # Backup omo-mode script if it exists
+    if [ -f "$CONFIG_DIR/omo-mode" ]; then
+        cp "$CONFIG_DIR/omo-mode" "$backup_path/"
+        backup_count=$((backup_count + 1))
+    fi
+
+    if [ $backup_count -eq 0 ]; then
+        rmdir "$backup_path"
+        print_warning "No files found to backup"
+        return 0
+    fi
+
+    print_success "Backup created: $backup_path ($backup_count files)"
+    return 0
+}
+
+# Restore from backup
+restore_from_backup() {
+    local backup_dir="$1"
+
+    if [ ! -d "$backup_dir" ]; then
+        print_error "Backup directory not found: $backup_dir"
+        return 1
+    fi
+
+    print_info "Restoring from backup: $backup_dir"
+
+    # Restore all JSON files
+    local restore_count=0
+    for file in "$backup_dir"/*.json; do
+        if [ -f "$file" ]; then
+            cp "$file" "$CONFIG_DIR/"
+            restore_count=$((restore_count + 1))
+        fi
+    done
+
+    # Restore omo-mode script if it exists in backup
+    if [ -f "$backup_dir/omo-mode" ]; then
+        cp "$backup_dir/omo-mode" "$CONFIG_DIR/"
+        chmod +x "$CONFIG_DIR/omo-mode"
+        restore_count=$((restore_count + 1))
+    fi
+
+    if [ $restore_count -eq 0 ]; then
+        print_error "No files found in backup"
+        return 1
+    fi
+
+    print_success "Restored $restore_count files from backup"
+    return 0
+}
+
 # Download remote configs to temp directory
 download_remote_configs() {
     local temp_dir="$1"
     local base_url="https://raw.githubusercontent.com/joshhmann/opencode-configs/main/configs"
-    local configs="oh-my-opencode-free.json oh-my-opencode-balanced.json oh-my-opencode-performance.json oh-my-opencode-gemini-free.json oh-my-opencode-gemini-balanced.json oh-my-opencode-gemini-performance.json"
+    local configs="oh-my-opencode-free.json oh-my-opencode-balanced.json oh-my-opencode-performance.json"
 
     for config in $configs; do
         if ! curl -fsSL -m 30 "$base_url/$config" -o "$temp_dir/$config" 2>/dev/null; then
@@ -61,23 +137,65 @@ validate_configs() {
         if [ -f "$config" ]; then
             local basename=$(basename "$config")
 
-            # Validate JSON syntax
             if ! python3 -c "import json; json.load(open('$config'))" 2>/dev/null; then
                 echo "ERROR: Invalid JSON in $basename" >&2
                 has_error=1
-                continue
-            fi
-
-            # Verify _version field exists
-            if ! grep -q '"_version"' "$config"; then
-                echo "ERROR: Missing _version in $basename" >&2
-                has_error=1
-                continue
             fi
         fi
     done
 
     return $has_error
+}
+
+# Store SHA256 hashes of config files
+store_config_hashes() {
+    local hash_file="$CONFIG_DIR/.config-hashes"
+    : > "$hash_file"  # Clear/create
+    for config in "$CONFIG_DIR"/oh-my-opencode*.json; do
+        if [ -f "$config" ]; then
+            sha256sum "$config" >> "$hash_file"
+        fi
+    done
+}
+
+# Check if user has modified config files
+has_user_modifications() {
+    local hash_file="$CONFIG_DIR/.config-hashes"
+    if [ ! -f "$hash_file" ]; then
+        return 1  # No hash file, assume no modifications
+    fi
+
+    while read -r hash file; do
+        if [ -f "$file" ]; then
+            local current_hash=$(sha256sum "$file" | awk '{print $1}')
+            if [ "$current_hash" != "$hash" ]; then
+                return 0  # Modified
+            fi
+        fi
+    done < "$hash_file"
+
+    return 1  # No modifications
+}
+
+# Detect which config files have been modified
+detect_modified_configs() {
+    local hash_file="$CONFIG_DIR/.config-hashes"
+    local modified=""
+
+    if [ ! -f "$hash_file" ]; then
+        return
+    fi
+
+    while read -r hash file; do
+        if [ -f "$file" ]; then
+            local current_hash=$(sha256sum "$file" | awk '{print $1}')
+            if [ "$current_hash" != "$hash" ]; then
+                modified="$modified $(basename "$file")"
+            fi
+        fi
+    done < "$hash_file"
+
+    echo "$modified"
 }
 
 # Detect installation type (git clone or curl download)
@@ -201,6 +319,104 @@ check_updates() {
     fi
 }
 
+perform_update() {
+    local auto_confirm=false
+
+    if [ "$1" = "--yes" ]; then
+        auto_confirm=true
+        shift
+    fi
+
+    print_info "Checking for updates..."
+
+    check_updates
+    local update_status=$?
+
+    if [ $update_status -eq 1 ]; then
+        print_info "No updates available"
+        return 0
+    elif [ $update_status -ne 0 ]; then
+        print_error "Failed to check for updates"
+        return 1
+    fi
+
+    if has_user_modifications; then
+        local modified=$(detect_modified_configs)
+        print_warning "You have modified config files: $modified"
+        if ! $auto_confirm; then
+            read -p "Continue and overwrite modifications? [y/N] " confirm
+            [[ "$confirm" =~ [yY] ]] || return 1
+        fi
+    fi
+
+    if ! $auto_confirm; then
+        echo ""
+        read -p "Apply update? [y/N] " confirm
+        if [[ ! "$confirm" =~ [yY] ]]; then
+            print_info "Update cancelled"
+            return 0
+        fi
+    fi
+
+    print_info "Creating backup..."
+    if ! create_backup "pre-update"; then
+        print_error "Failed to create backup"
+        return 1
+    fi
+
+    local backup_dir
+    backup_dir=$(ls -td "$CONFIG_DIR"/backups/*-pre-update 2>/dev/null | head -1)
+
+    if [ -z "$backup_dir" ]; then
+        print_error "Failed to locate backup directory"
+        return 1
+    fi
+
+    print_info "Downloading updates..."
+    local temp_dir
+    temp_dir=$(mktemp -d)
+    trap 'rm -rf "$temp_dir"' EXIT
+
+    if ! download_remote_configs "$temp_dir"; then
+        print_error "Download failed"
+        restore_from_backup "$backup_dir"
+        return 1
+    fi
+
+    print_info "Validating updates..."
+    if ! validate_configs "$temp_dir"; then
+        print_error "Validation failed - rolling back"
+        restore_from_backup "$backup_dir"
+        return 1
+    fi
+
+    print_info "Applying updates..."
+    local update_count=0
+    for file in "$temp_dir"/*.json; do
+        if [ -f "$file" ]; then
+            local basename
+            basename=$(basename "$file")
+            if [ "$basename" != "opencode.json" ]; then
+                cp "$file" "$CONFIG_DIR/"
+                update_count=$((update_count + 1))
+            fi
+        fi
+    done
+
+    if [ -L "$CONFIG_DIR/oh-my-opencode.json" ]; then
+        rm "$CONFIG_DIR/oh-my-opencode.json"
+    fi
+    if [ -f "$CONFIG_DIR/oh-my-opencode-balanced.json" ]; then
+        ln -sf "$CONFIG_DIR/oh-my-opencode-balanced.json" "$CONFIG_DIR/oh-my-opencode.json"
+    fi
+
+    store_config_hashes
+
+    print_success "Update complete ($update_count files updated)"
+    print_info "Backup stored at: $backup_dir"
+    return 0
+}
+
 # Check if opencode is installed
 check_opencode() {
     if ! command -v opencode &> /dev/null; then
@@ -245,7 +461,9 @@ install_configs() {
     fi
     
     ln -sf "$CONFIG_DIR/oh-my-opencode-balanced.json" "$CONFIG_DIR/oh-my-opencode.json"
-    
+
+    store_config_hashes
+
     print_success "Configuration files installed"
 }
 
@@ -399,8 +617,34 @@ main() {
     print_instructions
 }
 
-# Run main function
-if [[ "$1" == "--check-updates" ]]; then
+AUTO_CONFIRM=false
+PERFORM_UPDATE=false
+CHECK_UPDATES=false
+
+for arg in "$@"; do
+    case "$arg" in
+        --yes)
+            AUTO_CONFIRM=true
+            ;;
+        --update)
+            PERFORM_UPDATE=true
+            ;;
+        --check-updates)
+            CHECK_UPDATES=true
+            ;;
+    esac
+done
+
+if [ "$PERFORM_UPDATE" = "true" ]; then
+    if [ "$AUTO_CONFIRM" = "true" ]; then
+        perform_update --yes
+    else
+        perform_update
+    fi
+    exit $?
+fi
+
+if [ "$CHECK_UPDATES" = "true" ]; then
     check_updates
     exit $?
 fi

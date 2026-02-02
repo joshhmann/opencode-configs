@@ -25,10 +25,14 @@ show_help() {
     echo "  performance - Maximum quality with kimi-for-coding k2p5 as primary"
     echo "  list        - Show available modes and current status"
     echo "  check-update - Check for available updates"
+    echo "  update      - Apply updates (asks for confirmation)"
+    echo "  update --yes - Apply updates without confirmation"
     echo ""
     echo "Examples:"
     echo "  omo-mode free       # Switch to free/frugal mode"
     echo "  omo-mode performance # Switch to performance mode"
+    echo "  omo-mode update      # Update configs (with confirmation)"
+    echo "  omo-mode update --yes # Update configs (no confirmation)"
 }
 
 show_status() {
@@ -206,6 +210,190 @@ validate_configs() {
     return $has_error
 }
 
+# Perform update with user confirmation
+perform_update() {
+    local auto_confirm=false
+    if [ "$1" = "--yes" ]; then
+        auto_confirm=true
+    fi
+
+    echo "Checking for updates..."
+
+    # Get current mode before update
+    local current_mode="balanced"
+    local local_version="unknown"
+    if [ -L "$CURRENT_CONFIG" ]; then
+        local target=$(readlink "$CURRENT_CONFIG")
+        current_mode=$(basename "$target" .json | sed 's/oh-my-opencode-//')
+        if [ -f "$target" ] && command -v get_config_version &> /dev/null; then
+            local_version=$(get_config_version "$target")
+        fi
+    fi
+
+    # Get remote version
+    local remote_version="unknown"
+    local base_url="https://raw.githubusercontent.com/joshhmann/opencode-configs/main/configs"
+    local temp_file=$(mktemp)
+
+    if curl -fsSL -m 10 "$base_url/oh-my-opencode-${current_mode}.json" -o "$temp_file" 2>/dev/null; then
+        if command -v get_config_version &> /dev/null; then
+            remote_version=$(get_config_version "$temp_file")
+        fi
+    fi
+    rm -f "$temp_file"
+
+    echo "Current mode: $current_mode"
+    echo "Local version: $local_version"
+    echo "Remote version: $remote_version"
+
+    # Check if update needed
+    if [ "$local_version" != "unknown" ] && [ "$remote_version" != "unknown" ]; then
+        if command -v version_compare &> /dev/null; then
+            version_compare "$local_version" "$remote_version"
+            case $? in
+                0)
+                    echo "No updates available"
+                    return 0
+                    ;;
+                1)
+                    echo "Local version is newer (development?), no update needed"
+                    return 0
+                    ;;
+                2)
+                    echo "Update available: $local_version → $remote_version"
+                    ;;
+            esac
+        else
+            if [ "$local_version" = "$remote_version" ]; then
+                echo "No updates available"
+                return 0
+            else
+                echo "Version mismatch - checking remote..."
+            fi
+        fi
+    else
+        echo "Could not determine update status"
+        if ! $auto_confirm; then
+            read -p "Proceed anyway? [y/N] " confirm
+            [[ "$confirm" =~ [yY] ]] || return 1
+        fi
+    fi
+
+    if has_user_modifications; then
+        local modified=$(detect_modified_configs)
+        echo "WARNING: You have modified config files: $modified"
+        if ! $auto_confirm; then
+            read -p "Continue and overwrite modifications? [y/N] " confirm
+            [[ "$confirm" =~ [yY] ]] || return 1
+        fi
+    fi
+
+    # Confirm update
+    if ! $auto_confirm; then
+        read -p "Apply update? [y/N] " confirm
+        [[ "$confirm" =~ [yY] ]] || return 1
+    fi
+
+    # Create backup
+    local backup_dir="$CONFIG_DIR/backups/$(date +%Y%m%d-%H%M%S)-pre-update"
+    mkdir -p "$backup_dir"
+    cp "$CONFIG_DIR"/oh-my-opencode*.json "$backup_dir/" 2>/dev/null || true
+    echo "✓ Backup created: $backup_dir"
+
+    # Download and validate
+    local temp_dir=$(mktemp -d)
+    trap 'rm -rf "$temp_dir"' EXIT
+
+    echo "Downloading remote configs..."
+    if ! download_remote_configs "$temp_dir"; then
+        echo "ERROR: Download failed" >&2
+        return 1
+    fi
+
+    echo "Validating configs..."
+    if ! validate_configs "$temp_dir"; then
+        echo "ERROR: Validation failed" >&2
+        return 1
+    fi
+
+    # Apply updates (preserve opencode.json)
+    echo "Applying updates..."
+    local files_updated=0
+    for file in "$temp_dir"/*.json; do
+        local basename=$(basename "$file")
+        # Never overwrite opencode.json (user's API keys and settings)
+        if [ "$basename" != "opencode.json" ]; then
+            cp "$file" "$CONFIG_DIR/"
+            files_updated=$((files_updated + 1))
+        fi
+    done
+
+    # Re-symlink current mode
+    rm -f "$CURRENT_CONFIG"
+    ln -s "$CONFIG_DIR/oh-my-opencode-${current_mode}.json" "$CURRENT_CONFIG"
+
+    store_config_hashes
+
+    echo ""
+    echo "✓ Update complete"
+    echo "  Files updated: $files_updated"
+    echo "  Current mode: $current_mode"
+    echo "  Backup: $backup_dir"
+    echo ""
+    echo "Restart any running opencode sessions to apply the changes."
+}
+
+# Store SHA256 hashes of config files
+store_config_hashes() {
+    local hash_file="$CONFIG_DIR/.config-hashes"
+    : > "$hash_file"  # Clear/create
+    for config in "$CONFIG_DIR"/oh-my-opencode*.json; do
+        if [ -f "$config" ]; then
+            sha256sum "$config" >> "$hash_file"
+        fi
+    done
+}
+
+# Check if user has modified config files
+has_user_modifications() {
+    local hash_file="$CONFIG_DIR/.config-hashes"
+    if [ ! -f "$hash_file" ]; then
+        return 1  # No hash file, assume no modifications
+    fi
+
+    while read -r hash file; do
+        if [ -f "$file" ]; then
+            local current_hash=$(sha256sum "$file" | awk '{print $1}')
+            if [ "$current_hash" != "$hash" ]; then
+                return 0  # Modified
+            fi
+        fi
+    done < "$hash_file"
+
+    return 1  # No modifications
+}
+
+# Detect which config files have been modified
+detect_modified_configs() {
+    local hash_file="$CONFIG_DIR/.config-hashes"
+    local modified=""
+
+    if [ ! -f "$hash_file" ]; then
+        return
+    fi
+
+    while read -r hash file; do
+        if [ -f "$file" ]; then
+            local current_hash=$(sha256sum "$file" | awk '{print $1}')
+            if [ "$current_hash" != "$hash" ]; then
+                modified="$modified $(basename "$file")"
+            fi
+        fi
+    done < "$hash_file"
+
+    echo "$modified"
+}
+
 # Main
 case "${1:-}" in
     -h|--help|help)
@@ -227,6 +415,10 @@ case "${1:-}" in
     check-update)
         check_update
         exit 0
+        ;;
+    update)
+        perform_update "${2:-}"
+        exit $?
         ;;
     *)
         echo "Error: Unknown command '$1'"
