@@ -20,19 +20,23 @@ show_help() {
     echo "Usage: omo-mode [MODE]"
     echo ""
     echo "Modes:"
-    echo "  free        - Use free models primarily (opencode/kimi-k2.5-free, glm-4.7-free)"
-    echo "  balanced    - Uses kimi-for-coding k2p5 via subscription, falls back to antigravity"
-    echo "  performance - Maximum quality with kimi-for-coding k2p5 as primary"
-    echo "  list        - Show available modes and current status"
-    echo "  check-update - Check for available updates"
-    echo "  update      - Apply updates (asks for confirmation)"
-    echo "  update --yes - Apply updates without confirmation"
+    echo "  free           - Use free models primarily (opencode/kimi-k2.5-free, glm-4.7-free)"
+    echo "  balanced       - Uses kimi-for-coding k2p5 via subscription, falls back to antigravity"
+    echo "  performance    - Maximum quality with kimi-for-coding k2p5 as primary"
+    echo "  gemini-only    - Use only Google Gemini models (antigravity-gemini-3-pro/flash)"
+    echo "  kimi-synthetic - Use Kimi K2.5 synthetic model as primary"
+    echo "  list           - Show available modes and current status"
+    echo "  check-update   - Check for available updates"
+    echo "  update         - Apply updates (asks for confirmation)"
+    echo "  update --yes   - Apply updates without confirmation"
     echo ""
     echo "Examples:"
-    echo "  omo-mode free       # Switch to free/frugal mode"
-    echo "  omo-mode performance # Switch to performance mode"
-    echo "  omo-mode update      # Update configs (with confirmation)"
-    echo "  omo-mode update --yes # Update configs (no confirmation)"
+    echo "  omo-mode free          # Switch to free/frugal mode"
+    echo "  omo-mode balanced      # Switch to balanced mode"
+    echo "  omo-mode performance   # Switch to performance mode"
+    echo "  omo-mode gemini-only   # Switch to Gemini-only mode"
+    echo "  omo-mode update        # Update configs (with confirmation)"
+    echo "  omo-mode update --yes  # Update configs (no confirmation)"
 }
 
 show_status() {
@@ -79,6 +83,12 @@ switch_mode() {
             ;;
         performance)
             target="oh-my-opencode-performance.json"
+            ;;
+        gemini-only)
+            target="oh-my-opencode-gemini-only.json"
+            ;;
+        kimi-synthetic)
+            target="oh-my-opencode-kimi-synthetic.json"
             ;;
         *)
             echo "Error: Unknown mode '$mode'"
@@ -171,7 +181,7 @@ check_update() {
 download_remote_configs() {
     local temp_dir="$1"
     local base_url="https://raw.githubusercontent.com/joshhmann/opencode-configs/main/configs"
-    local configs="oh-my-opencode-free.json oh-my-opencode-balanced.json oh-my-opencode-performance.json oh-my-opencode-gemini-free.json oh-my-opencode-gemini-balanced.json oh-my-opencode-gemini-performance.json"
+    local configs="oh-my-opencode-free.json oh-my-opencode-balanced.json oh-my-opencode-performance.json oh-my-opencode-gemini-only.json oh-my-opencode-kimi-synthetic.json"
 
     for config in $configs; do
         if ! curl -fsSL -m 30 "$base_url/$config" -o "$temp_dir/$config" 2>/dev/null; then
@@ -404,7 +414,7 @@ case "${1:-}" in
         show_status
         exit 0
         ;;
-    free|balanced|performance)
+    free|balanced|performance|gemini-only|kimi-synthetic)
         switch_mode "$1"
         exit 0
         ;;
