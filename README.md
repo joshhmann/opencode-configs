@@ -143,7 +143,7 @@ If you have a Kimi for Coding subscription:
 }
 ```
 
-#### Option 2: Moonshot API
+#### Option 2: Moonshot API (Alternative)
 
 ```json
 {
@@ -164,9 +164,7 @@ If you have a Kimi for Coding subscription:
 }
 ```
 
-#### Option 3: Antigravity
 
-Already configured if you have `opencode-antigravity-auth` plugin installed.
 
 ## 🎮 Usage
 
@@ -179,9 +177,9 @@ omo
 omo-mode status
 
 # Switch modes
-omof    # Free mode: free models → subscription → antigravity
-omob    # Balanced mode: subscription → antigravity  
-omop    # Performance mode: subscription → opencode → antigravity
+omof    # Free mode: free models → subscription → opencode
+omob    # Balanced mode: subscription → opencode  
+omop    # Performance mode: subscription → opencode
 ```
 
 ### Using OpenCode
@@ -234,7 +232,7 @@ Edit the `fallbackChain` arrays in any config file:
       "fallbackChain": [
         "kimi-for-coding/k2p5",
         "your-custom-model",
-        "google/antigravity-claude-opus-4-5-thinking"
+        "opencode/claude-opus-4-5"
       ]
     }
   }
@@ -292,7 +290,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [OpenCode](https://opencode.ai) - The AI coding agent
 - [Oh My OpenCode](https://github.com/code-yeongyu/oh-my-opencode) - The orchestration layer
 - [Kimi](https://platform.moonshot.ai/) - The AI model
-- [Antigravity](https://antigravity.ai/) - Model provider
+
 
 ## 📧 Support
 

@@ -8,109 +8,109 @@
   "_description": "GEMINI ONLY TIER - Gemini 3 Pro/Flash as primary models replacing all Claude models",
   "agents": {
     "sisyphus": {
-      "model": "google/antigravity-gemini-3-pro",
+      "model": "opencode/gemini-3-pro",
       "fallbackChain": [
-        "google/antigravity-gemini-3-pro",
-        "google/antigravity-gemini-3-flash",
+        "opencode/gemini-3-pro",
+        "opencode/gemini-3-flash",
         "opencode/gemini-3-pro",
         "kimi-for-coding/k2p5"
       ]
     },
     "atlas": {
-      "model": "google/antigravity-gemini-3-pro",
+      "model": "opencode/gemini-3-pro",
       "fallbackChain": [
-        "google/antigravity-gemini-3-pro",
-        "google/antigravity-gemini-3-flash",
+        "opencode/gemini-3-pro",
+        "opencode/gemini-3-flash",
         "opencode/gemini-3-pro",
         "kimi-for-coding/k2p5"
       ]
     },
     "oracle": {
-      "model": "google/antigravity-gemini-3-pro",
+      "model": "opencode/gemini-3-pro",
       "fallbackChain": [
-        "google/antigravity-gemini-3-pro",
-        "google/antigravity-gemini-3-flash",
+        "opencode/gemini-3-pro",
+        "opencode/gemini-3-flash",
         "opencode/gemini-3-pro",
         "kimi-for-coding/k2p5"
       ]
     },
     "explore": {
-      "model": "google/antigravity-gemini-3-flash",
+      "model": "opencode/gemini-3-flash",
       "fallbackChain": [
-        "google/antigravity-gemini-3-flash",
+        "opencode/gemini-3-flash",
         "opencode/gemini-3-flash",
         "opencode/gemini-3-pro",
         "kimi-for-coding/k2p5"
       ]
     },
     "librarian": {
-      "model": "google/antigravity-gemini-3-flash",
+      "model": "opencode/gemini-3-flash",
       "fallbackChain": [
-        "google/antigravity-gemini-3-flash",
+        "opencode/gemini-3-flash",
         "opencode/gemini-3-flash",
         "opencode/gemini-3-pro",
         "kimi-for-coding/k2p5"
       ]
     },
     "frontend-ui-ux-engineer": {
-      "model": "google/antigravity-gemini-3-pro",
+      "model": "opencode/gemini-3-pro",
       "fallbackChain": [
-        "google/antigravity-gemini-3-pro",
-        "google/antigravity-gemini-3-flash",
+        "opencode/gemini-3-pro",
+        "opencode/gemini-3-flash",
         "opencode/gemini-3-pro",
         "kimi-for-coding/k2p5"
       ]
     },
     "document-writer": {
-      "model": "google/antigravity-gemini-3-pro",
+      "model": "opencode/gemini-3-pro",
       "fallbackChain": [
-        "google/antigravity-gemini-3-pro",
-        "google/antigravity-gemini-3-flash",
+        "opencode/gemini-3-pro",
+        "opencode/gemini-3-flash",
         "opencode/gemini-3-pro",
         "kimi-for-coding/k2p5"
       ]
     },
     "multimodal-looker": {
-      "model": "google/antigravity-gemini-3-flash",
+      "model": "opencode/gemini-3-flash",
       "fallbackChain": [
-        "google/antigravity-gemini-3-flash",
+        "opencode/gemini-3-flash",
         "opencode/gemini-3-flash",
         "opencode/gemini-3-pro",
         "kimi-for-coding/k2p5"
       ]
     },
     "metis": {
-      "model": "google/antigravity-gemini-3-pro",
+      "model": "opencode/gemini-3-pro",
       "fallbackChain": [
-        "google/antigravity-gemini-3-pro",
-        "google/antigravity-gemini-3-flash",
+        "opencode/gemini-3-pro",
+        "opencode/gemini-3-flash",
         "opencode/gemini-3-pro",
         "kimi-for-coding/k2p5"
       ]
     },
     "prometheus": {
-      "model": "google/antigravity-gemini-3-pro",
+      "model": "opencode/gemini-3-pro",
       "fallbackChain": [
-        "google/antigravity-gemini-3-pro",
-        "google/antigravity-gemini-3-flash",
+        "opencode/gemini-3-pro",
+        "opencode/gemini-3-flash",
         "opencode/gemini-3-pro",
         "kimi-for-coding/k2p5"
       ]
     },
     "momus": {
-      "model": "google/antigravity-gemini-3-pro",
+      "model": "opencode/gemini-3-pro",
       "fallbackChain": [
-        "google/antigravity-gemini-3-pro",
-        "google/antigravity-gemini-3-flash",
+        "opencode/gemini-3-pro",
+        "opencode/gemini-3-flash",
         "opencode/gemini-3-pro",
         "kimi-for-coding/k2p5"
       ]
     },
     "hephaestus": {
-      "model": "google/antigravity-gemini-3-pro",
+      "model": "opencode/gemini-3-pro",
       "fallbackChain": [
-        "google/antigravity-gemini-3-pro",
-        "google/antigravity-gemini-3-flash",
+        "opencode/gemini-3-pro",
+        "opencode/gemini-3-flash",
         "opencode/gemini-3-pro",
         "kimi-for-coding/k2p5"
       ]
@@ -118,55 +118,55 @@
   },
   "categories": {
     "quick": {
-      "model": "google/antigravity-gemini-3-flash",
+      "model": "opencode/gemini-3-flash",
       "fallbackChain": [
-        "google/antigravity-gemini-3-flash",
+        "opencode/gemini-3-flash",
         "opencode/gemini-3-flash",
         "opencode/gpt-5-nano",
         "kimi-for-coding/k2p5"
       ]
     },
     "unspecified-low": {
-      "model": "google/antigravity-gemini-3-flash",
+      "model": "opencode/gemini-3-flash",
       "fallbackChain": [
-        "google/antigravity-gemini-3-flash",
+        "opencode/gemini-3-flash",
         "opencode/gemini-3-flash",
         "opencode/glm-4.7-free",
         "kimi-for-coding/k2p5"
       ]
     },
     "deep": {
-      "model": "google/antigravity-gemini-3-pro",
+      "model": "opencode/gemini-3-pro",
       "fallbackChain": [
-        "google/antigravity-gemini-3-pro",
-        "google/antigravity-gemini-3-flash",
+        "opencode/gemini-3-pro",
+        "opencode/gemini-3-flash",
         "opencode/gemini-3-pro",
         "kimi-for-coding/k2p5"
       ]
     },
     "artistry": {
-      "model": "google/antigravity-gemini-3-pro",
+      "model": "opencode/gemini-3-pro",
       "fallbackChain": [
-        "google/antigravity-gemini-3-pro",
-        "google/antigravity-gemini-3-flash",
+        "opencode/gemini-3-pro",
+        "opencode/gemini-3-flash",
         "opencode/gemini-3-pro",
         "kimi-for-coding/k2p5"
       ]
     },
     "ultrabrain": {
-      "model": "google/antigravity-gemini-3-pro",
+      "model": "opencode/gemini-3-pro",
       "fallbackChain": [
-        "google/antigravity-gemini-3-pro",
-        "google/antigravity-gemini-3-flash",
+        "opencode/gemini-3-pro",
+        "opencode/gemini-3-flash",
         "opencode/gemini-3-pro",
         "kimi-for-coding/k2p5"
       ]
     },
     "visual-engineering": {
-      "model": "google/antigravity-gemini-3-pro",
+      "model": "opencode/gemini-3-pro",
       "fallbackChain": [
-        "google/antigravity-gemini-3-pro",
-        "google/antigravity-gemini-3-flash",
+        "opencode/gemini-3-pro",
+        "opencode/gemini-3-flash",
         "opencode/gemini-3-pro",
         "kimi-for-coding/k2p5"
       ]

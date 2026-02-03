@@ -533,8 +533,7 @@ create_opencode_config() {
 {
   "$schema": "https://opencode.ai/config.json",
   "plugin": [
-    "oh-my-opencode",
-    "opencode-antigravity-auth@1.4.3"
+    "oh-my-opencode"
   ],
   "provider": {
     "opencode": {
@@ -585,9 +584,9 @@ print_instructions() {
     echo ""
     echo "Available modes:"
     echo "  omo         - Show current mode/status"
-    echo "  omof        - Free mode (free → subscription → antigravity)"
-    echo "  omob        - Balanced mode (subscription → antigravity)"
-    echo "  omop        - Performance mode (subscription → opencode → antigravity)"
+    echo "  omof        - Free mode (free → subscription → opencode)"
+    echo "  omob        - Balanced mode (subscription → opencode)"
+    echo "  omop        - Performance mode (subscription → opencode)"
     echo ""
     echo "Configuration files location: $CONFIG_DIR"
     echo ""

@@ -5,162 +5,179 @@
   "_schema_version": "1",
   "_source": "https://github.com/joshhmann/opencode-configs",
   "google_auth": false,
-  "_description": "BALANCED TIER - Antigravity Opus 4.5 / Sonnet 4.5 as main models for premium agents with strategic fallbacks",
+  "_description": "BALANCED TIER - Subscription and free models: kimi-for-coding, synthetic, big-pickle, glm-4.7-free, minimax-m2.1-free",
   "agents": {
     "sisyphus": {
       "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
         "kimi-for-coding/k2p5",
-        "google/antigravity-claude-opus-4-5-thinking",
-        "opencode/kimi-k2.5",
-        "opencode/claude-sonnet-4-5"
+        "synthetic/hf:moonshotai/Kimi-K2.5",
+        "opencode/big-pickle",
+        "opencode/glm-4.7-free",
+        "opencode/minimax-m2.1-free"
       ]
     },
     "atlas": {
-      "model": "google/antigravity-claude-opus-4-5-thinking",
-      "fallbackChain": [
-        "google/antigravity-claude-opus-4-5-thinking",
-        "kimi-for-coding/k2p5",
-        "opencode/claude-opus-4-5",
-        "opencode/kimi-k2.5"
-      ]
-    },
-    "oracle": {
-      "model": "google/antigravity-claude-opus-4-5-thinking",
-      "fallbackChain": [
-        "google/antigravity-claude-opus-4-5-thinking",
-        "kimi-for-coding/k2p5",
-        "opencode/claude-opus-4-5",
-        "opencode/kimi-k2.5"
-      ]
-    },
-    "explore": {
       "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
         "kimi-for-coding/k2p5",
-        "opencode/kimi-k2.5",
-        "google/antigravity-gemini-3-flash"
+        "synthetic/hf:moonshotai/Kimi-K2.5",
+        "opencode/big-pickle",
+        "opencode/glm-4.7-free",
+        "opencode/minimax-m2.1-free"
+      ]
+    },
+    "oracle": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "synthetic/hf:moonshotai/Kimi-K2.5",
+        "opencode/big-pickle",
+        "opencode/glm-4.7-free",
+        "opencode/minimax-m2.1-free"
+      ]
+    },
+    "explore": {
+      "model": "opencode/big-pickle",
+      "fallbackChain": [
+        "opencode/big-pickle",
+        "opencode/glm-4.7-free",
+        "opencode/minimax-m2.1-free",
+        "opencode/trinity-large-preview-free"
       ]
     },
     "librarian": {
-      "model": "google/antigravity-gemini-3-flash",
+      "model": "opencode/gemini-3-flash",
       "fallbackChain": [
-        "google/antigravity-gemini-3-flash",
-        "opencode/kimi-k2.5",
-        "kimi-for-coding/k2p5"
+        "opencode/gemini-3-flash",
+        "opencode/big-pickle",
+        "opencode/glm-4.7-free",
+        "opencode/minimax-m2.1-free"
       ]
     },
     "frontend-ui-ux-engineer": {
       "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
         "kimi-for-coding/k2p5",
-        "opencode/kimi-k2.5",
-        "opencode/claude-sonnet-4-5",
-        "google/antigravity-claude-opus-4-5-thinking"
+        "synthetic/hf:moonshotai/Kimi-K2.5",
+        "opencode/big-pickle",
+        "opencode/glm-4.7-free",
+        "opencode/minimax-m2.1-free"
       ]
     },
     "document-writer": {
-      "model": "kimi-for-coding/k2p5",
+      "model": "opencode/big-pickle",
       "fallbackChain": [
-        "kimi-for-coding/k2p5",
-        "opencode/kimi-k2.5",
-        "opencode/glm-4.7",
-        "google/antigravity-gemini-3-flash"
+        "opencode/big-pickle",
+        "opencode/glm-4.7-free",
+        "opencode/trinity-large-preview-free",
+        "opencode/minimax-m2.1-free"
       ]
     },
     "multimodal-looker": {
-      "model": "google/antigravity-gemini-3-flash",
+      "model": "opencode/gemini-3-flash",
       "fallbackChain": [
-        "google/antigravity-gemini-3-flash",
-        "opencode/kimi-k2.5",
-        "kimi-for-coding/k2p5"
+        "opencode/gemini-3-flash",
+        "opencode/big-pickle",
+        "opencode/glm-4.7-free",
+        "opencode/minimax-m2.1-free"
       ]
     },
     "metis": {
-      "model": "opencode/kimi-k2.5",
+      "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
-        "opencode/kimi-k2.5",
         "kimi-for-coding/k2p5",
-        "google/antigravity-claude-sonnet-4-5"
+        "synthetic/hf:moonshotai/Kimi-K2.5",
+        "opencode/big-pickle",
+        "opencode/glm-4.7-free"
       ]
     },
     "prometheus": {
-      "model": "google/antigravity-claude-opus-4-5-thinking",
+      "model": "opencode/gemini-3-pro",
       "fallbackChain": [
-        "google/antigravity-claude-opus-4-5-thinking",
+        "opencode/gemini-3-pro",
         "kimi-for-coding/k2p5",
-        "opencode/claude-opus-4-5",
-        "opencode/kimi-k2.5"
+        "synthetic/hf:moonshotai/Kimi-K2.5",
+        "opencode/big-pickle"
       ]
     },
     "momus": {
-      "model": "google/antigravity-claude-opus-4-5-thinking",
+      "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
-        "google/antigravity-claude-opus-4-5-thinking",
         "kimi-for-coding/k2p5",
-        "opencode/claude-opus-4-5",
-        "opencode/kimi-k2.5"
+        "synthetic/hf:moonshotai/Kimi-K2.5",
+        "opencode/big-pickle",
+        "opencode/glm-4.7-free",
+        "opencode/minimax-m2.1-free"
       ]
     },
     "hephaestus": {
-      "model": "google/antigravity-claude-opus-4-5-thinking",
+      "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
-        "google/antigravity-claude-opus-4-5-thinking",
         "kimi-for-coding/k2p5",
-        "opencode/claude-opus-4-5",
-        "opencode/kimi-k2.5"
+        "synthetic/hf:moonshotai/Kimi-K2.5",
+        "opencode/big-pickle",
+        "opencode/glm-4.7-free",
+        "opencode/minimax-m2.1-free"
       ]
     }
   },
   "categories": {
     "quick": {
-      "model": "google/antigravity-gemini-3-flash",
+      "model": "opencode/gpt-5-nano",
       "fallbackChain": [
-        "google/antigravity-gemini-3-flash",
-        "opencode/kimi-k2.5",
-        "kimi-for-coding/k2p5"
+        "opencode/gpt-5-nano",
+        "opencode/glm-4.7-free",
+        "opencode/minimax-m2.1-free",
+        "opencode/trinity-large-preview-free"
       ]
     },
     "unspecified-low": {
       "model": "opencode/glm-4.7-free",
       "fallbackChain": [
         "opencode/glm-4.7-free",
-        "opencode/kimi-k2.5-free",
-        "google/antigravity-gemini-3-flash",
-        "kimi-for-coding/k2p5"
+        "opencode/trinity-large-preview-free",
+        "opencode/big-pickle",
+        "opencode/minimax-m2.1-free"
       ]
     },
     "deep": {
-      "model": "google/antigravity-claude-opus-4-5-thinking",
+      "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
-        "google/antigravity-claude-opus-4-5-thinking",
-        "google/antigravity-gemini-3-pro",
-        "kimi-for-coding/k2p5"
+        "kimi-for-coding/k2p5",
+        "synthetic/hf:moonshotai/Kimi-K2.5",
+        "opencode/big-pickle",
+        "opencode/glm-4.7-free",
+        "opencode/minimax-m2.1-free"
       ]
     },
     "artistry": {
       "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
         "kimi-for-coding/k2p5",
-        "opencode/kimi-k2.5",
-        "google/antigravity-claude-opus-4-5-thinking"
+        "synthetic/hf:moonshotai/Kimi-K2.5",
+        "opencode/big-pickle",
+        "opencode/glm-4.7-free"
       ]
     },
     "ultrabrain": {
-      "model": "google/antigravity-claude-opus-4-5-thinking",
+      "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
-        "google/antigravity-claude-opus-4-5-thinking",
-        "google/antigravity-gemini-3-pro",
-        "kimi-for-coding/k2p5"
+        "kimi-for-coding/k2p5",
+        "synthetic/hf:moonshotai/Kimi-K2.5",
+        "opencode/big-pickle",
+        "opencode/glm-4.7-free",
+        "opencode/minimax-m2.1-free"
       ]
     },
     "visual-engineering": {
       "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
         "kimi-for-coding/k2p5",
-        "opencode/kimi-k2.5",
-        "opencode/claude-sonnet-4-5",
-        "google/antigravity-claude-opus-4-5-thinking"
+        "synthetic/hf:moonshotai/Kimi-K2.5",
+        "opencode/big-pickle",
+        "opencode/glm-4.7-free",
+        "opencode/minimax-m2.1-free"
       ]
     }
   }

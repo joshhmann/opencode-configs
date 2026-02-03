@@ -5,115 +5,120 @@
   "_schema_version": "1",
   "_source": "https://github.com/joshhmann/opencode-configs",
   "google_auth": false,
-  "_description": "FREE TIER - Solely free models: Kimi 2.5 as main agents, GLM 4.7 and Minimax 2.1 as backups, Nano 5 for rapid tasks",
+  "_description": "FREE TIER - Free models only: synthetic, big-pickle, glm-4.7-free, minimax-m2.1-free, trinity-free",
   "agents": {
     "sisyphus": {
-      "model": "opencode/kimi-k2.5-free",
+      "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
-        "opencode/kimi-k2.5-free",
+        "kimi-for-coding/k2p5",
+        "synthetic/hf:moonshotai/Kimi-K2.5",
+        "opencode/big-pickle",
         "opencode/glm-4.7-free",
-        "opencode/minimax-m2.1-free",
-        "opencode/trinity-large-preview-free"
+        "opencode/minimax-m2.1-free"
       ]
     },
     "atlas": {
-      "model": "opencode/kimi-k2.5-free",
+      "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
-        "opencode/kimi-k2.5-free",
+        "kimi-for-coding/k2p5",
+        "synthetic/hf:moonshotai/Kimi-K2.5",
+        "opencode/big-pickle",
         "opencode/glm-4.7-free",
-        "opencode/minimax-m2.1-free",
-        "opencode/trinity-large-preview-free"
+        "opencode/minimax-m2.1-free"
       ]
     },
     "oracle": {
-      "model": "opencode/kimi-k2.5-free",
+      "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
-        "opencode/kimi-k2.5-free",
+        "kimi-for-coding/k2p5",
+        "synthetic/hf:moonshotai/Kimi-K2.5",
+        "opencode/big-pickle",
         "opencode/glm-4.7-free",
-        "opencode/minimax-m2.1-free",
-        "opencode/trinity-large-preview-free"
+        "opencode/minimax-m2.1-free"
       ]
     },
     "explore": {
-      "model": "opencode/kimi-k2.5-free",
+      "model": "opencode/big-pickle",
       "fallbackChain": [
-        "opencode/kimi-k2.5-free",
-        "opencode/glm-4.7-free",
-        "opencode/trinity-large-preview-free",
-        "google/antigravity-gemini-3-flash"
-      ]
-    },
-    "librarian": {
-      "model": "google/antigravity-gemini-3-flash",
-      "fallbackChain": [
-        "google/antigravity-gemini-3-flash",
-        "opencode/kimi-k2.5-free",
-        "opencode/minimax-m2.1-free",
-        "kimi-for-coding/k2p5"
-      ]
-    },
-    "frontend-ui-ux-engineer": {
-      "model": "opencode/kimi-k2.5-free",
-      "fallbackChain": [
-        "opencode/kimi-k2.5-free",
+        "opencode/big-pickle",
         "opencode/glm-4.7-free",
         "opencode/minimax-m2.1-free",
         "opencode/trinity-large-preview-free"
       ]
     },
-    "document-writer": {
-      "model": "opencode/kimi-k2.5-free",
+    "librarian": {
+      "model": "opencode/gemini-3-flash",
       "fallbackChain": [
-        "opencode/kimi-k2.5-free",
+        "opencode/gemini-3-flash",
+        "opencode/big-pickle",
+        "opencode/glm-4.7-free",
+        "opencode/minimax-m2.1-free"
+      ]
+    },
+    "frontend-ui-ux-engineer": {
+      "model": "kimi-for-coding/k2p5",
+      "fallbackChain": [
+        "kimi-for-coding/k2p5",
+        "synthetic/hf:moonshotai/Kimi-K2.5",
+        "opencode/big-pickle",
+        "opencode/glm-4.7-free",
+        "opencode/minimax-m2.1-free"
+      ]
+    },
+    "document-writer": {
+      "model": "opencode/big-pickle",
+      "fallbackChain": [
+        "opencode/big-pickle",
         "opencode/glm-4.7-free",
         "opencode/trinity-large-preview-free",
-        "kimi-for-coding/k2p5",
-        "google/antigravity-gemini-3-flash"
+        "opencode/minimax-m2.1-free"
       ]
     },
     "multimodal-looker": {
-      "model": "google/antigravity-gemini-3-flash",
+      "model": "opencode/gemini-3-flash",
       "fallbackChain": [
-        "google/antigravity-gemini-3-flash",
-        "opencode/kimi-k2.5-free",
+        "opencode/gemini-3-flash",
+        "opencode/big-pickle",
         "opencode/glm-4.7-free",
         "opencode/minimax-m2.1-free"
       ]
     },
     "metis": {
-      "model": "opencode/kimi-k2.5-free",
+      "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
-        "opencode/kimi-k2.5-free",
-        "opencode/glm-4.7-free",
         "kimi-for-coding/k2p5",
-        "google/antigravity-claude-sonnet-4-5"
+        "synthetic/hf:moonshotai/Kimi-K2.5",
+        "opencode/big-pickle",
+        "opencode/glm-4.7-free"
       ]
     },
     "prometheus": {
-      "model": "opencode/kimi-k2.5-free",
+      "model": "opencode/gemini-3-pro",
       "fallbackChain": [
-        "opencode/kimi-k2.5-free",
-        "opencode/glm-4.7-free",
-        "opencode/minimax-m2.1-free",
-        "opencode/trinity-large-preview-free"
+        "opencode/gemini-3-pro",
+        "kimi-for-coding/k2p5",
+        "synthetic/hf:moonshotai/Kimi-K2.5",
+        "opencode/big-pickle"
       ]
     },
     "momus": {
-      "model": "opencode/kimi-k2.5-free",
+      "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
-        "opencode/kimi-k2.5-free",
+        "kimi-for-coding/k2p5",
+        "synthetic/hf:moonshotai/Kimi-K2.5",
+        "opencode/big-pickle",
         "opencode/glm-4.7-free",
-        "opencode/minimax-m2.1-free",
-        "opencode/trinity-large-preview-free"
+        "opencode/minimax-m2.1-free"
       ]
     },
     "hephaestus": {
-      "model": "opencode/kimi-k2.5-free",
+      "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
-        "opencode/kimi-k2.5-free",
+        "kimi-for-coding/k2p5",
+        "synthetic/hf:moonshotai/Kimi-K2.5",
+        "opencode/big-pickle",
         "opencode/glm-4.7-free",
-        "opencode/minimax-m2.1-free",
-        "opencode/trinity-large-preview-free"
+        "opencode/minimax-m2.1-free"
       ]
     }
   },
@@ -123,8 +128,8 @@
       "fallbackChain": [
         "opencode/gpt-5-nano",
         "opencode/glm-4.7-free",
-        "opencode/kimi-k2.5-free",
-        "opencode/minimax-m2.1-free"
+        "opencode/minimax-m2.1-free",
+        "opencode/trinity-large-preview-free"
       ]
     },
     "unspecified-low": {
@@ -132,45 +137,47 @@
       "fallbackChain": [
         "opencode/glm-4.7-free",
         "opencode/trinity-large-preview-free",
-        "opencode/kimi-k2.5-free",
-        "google/antigravity-gemini-3-flash",
-        "synthetic/hf:zai-org/GLM-4.7"
+        "opencode/big-pickle",
+        "opencode/minimax-m2.1-free"
       ]
     },
     "deep": {
-      "model": "opencode/kimi-k2.5-free",
+      "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
-        "opencode/kimi-k2.5-free",
+        "kimi-for-coding/k2p5",
+        "synthetic/hf:moonshotai/Kimi-K2.5",
+        "opencode/big-pickle",
         "opencode/glm-4.7-free",
-        "opencode/minimax-m2.1-free",
-        "opencode/trinity-large-preview-free"
+        "opencode/minimax-m2.1-free"
       ]
     },
     "artistry": {
-      "model": "opencode/kimi-k2.5-free",
+      "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
-        "opencode/kimi-k2.5-free",
-        "opencode/glm-4.7-free",
         "kimi-for-coding/k2p5",
-        "google/antigravity-claude-opus-4-5-thinking"
+        "synthetic/hf:moonshotai/Kimi-K2.5",
+        "opencode/big-pickle",
+        "opencode/glm-4.7-free"
       ]
     },
     "ultrabrain": {
-      "model": "opencode/kimi-k2.5-free",
+      "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
-        "opencode/kimi-k2.5-free",
+        "kimi-for-coding/k2p5",
+        "synthetic/hf:moonshotai/Kimi-K2.5",
+        "opencode/big-pickle",
         "opencode/glm-4.7-free",
-        "opencode/minimax-m2.1-free",
-        "opencode/trinity-large-preview-free"
+        "opencode/minimax-m2.1-free"
       ]
     },
     "visual-engineering": {
-      "model": "opencode/kimi-k2.5-free",
+      "model": "kimi-for-coding/k2p5",
       "fallbackChain": [
-        "opencode/kimi-k2.5-free",
+        "kimi-for-coding/k2p5",
+        "synthetic/hf:moonshotai/Kimi-K2.5",
+        "opencode/big-pickle",
         "opencode/glm-4.7-free",
-        "opencode/minimax-m2.1-free",
-        "opencode/trinity-large-preview-free"
+        "opencode/minimax-m2.1-free"
       ]
     }
   }
